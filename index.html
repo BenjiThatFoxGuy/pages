@@ -3,25 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to the TUHost Repository</title>
+    <title>User Agent Checker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .info-box {
+            transition: all 0.3s ease;
+        }
+        .info-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
-<body>
-    <h1>Welcome to the TUHost Repository</h1>
-    <p>This page hosts files used for loading images, custom webpages, and media into my Tower Unite condos. If you're seeing this in Tower Unite, it means something went wrong or you typed the URL incorrectly.</p>
-    
-    <h2>What is Tower Unite?</h2>
-    <p><em>Tower Unite</em> is a multiplayer virtual world that allows you to load custom media, websites, and images into your condo using a built-in Chromium browser. This repository is a Tower Unite fork of my original VRChat host, adapted for the features available in Tower Unite. While it allows loading images and custom media, string loading is not supported in Tower Unite like it is in VRChat.</p>
+<body class="bg-gray-100 min-h-screen p-4">
+    <div class="max-w-3xl mx-auto">
+        <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">Browser Information Checker</h1>
+        
+        <div class="grid gap-6">
+            <!-- User Agent -->
+            <div class="info-box bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-2 text-blue-600">User Agent</h2>
+                <p class="bg-gray-100 p-4 rounded font-mono break-all" id="userAgent"></p>
+                <p class="text-sm text-gray-500 mt-2">This identifies the browser and operating system</p>
+            </div>
+            
+            <!-- Platform -->
+            <div class="info-box bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-2 text-blue-600">Platform</h2>
+                <p class="bg-gray-100 p-4 rounded font-mono" id="platform"></p>
+                <p class="text-sm text-gray-500 mt-2">The platform on which the browser is running</p>
+            </div>
+            
+            <!-- Screen Resolution -->
+            <div class="info-box bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-2 text-blue-600">Screen Resolution</h2>
+                <p class="bg-gray-100 p-4 rounded font-mono" id="screenResolution"></p>
+                <p class="text-sm text-gray-500 mt-2">Width × Height in pixels</p>
+            </div>
+            
+            <!-- Color Depth -->
+            <div class="info-box bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-2 text-blue-600">Color Depth</h2>
+                <p class="bg-gray-100 p-4 rounded font-mono" id="colorDepth"></p>
+                <p class="text-sm text-gray-500 mt-2">Number of bits used to represent colors</p>
+            </div>
+            
+            <!-- Timezone -->
+            <div class="info-box bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-2 text-blue-600">Timezone</h2>
+                <p class="bg-gray-100 p-4 rounded font-mono" id="timezone"></p>
+                <p class="text-sm text-gray-500 mt-2">Current timezone offset from UTC</p>
+            </div>
+            
+            <!-- Cookies Enabled -->
+            <div class="info-box bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-2 text-blue-600">Cookies Enabled</h2>
+                <p class="bg-gray-100 p-4 rounded font-mono" id="cookiesEnabled"></p>
+                <p class="text-sm text-gray-500 mt-2">Whether cookies are supported</p>
+            </div>
+            
+            <!-- JavaScript Enabled -->
+            <div class="info-box bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-2 text-blue-600">JavaScript Enabled</h2>
+                <p class="bg-gray-100 p-4 rounded font-mono">Yes (you're seeing this page!)</p>
+                <p class="text-sm text-gray-500 mt-2">If this were false, you wouldn't see any data</p>
+            </div>
+        </div>
+        
+        <div class="mt-8 p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded">
+            <p class="text-yellow-700">
+                <strong>Note:</strong> This page is designed to help identify the user agent and capabilities of embedded browsers like CEF (Chromium Embedded Framework) in games. 
+                The information shown is what the browser reports about itself.
+            </p>
+        </div>
+    </div>
 
-    <h2>Repository Purpose</h2>
-    <p>This repository houses public files specifically for loading images, custom webpages, and media into my Tower Unite condos. It is not open for external contributions such as issues, pull requests, or discussions.</p>
-
-    <h2>Important Note</h2>
-    <p>Since Tower Unite uses Chromium for displaying custom content, the page is loaded without any interactivity options. You cannot interact with the page (click buttons, etc.) — it is simply rendered as-is within your condo.</p>
-
-    <h3><a href="javascript:history.back()">Go back to where you came from</a></h3>
-    <h3><a href="https://status.mechapower.eu">Visit the MP status page</a></h3>
-    <h3><a href="https://the.benjifox.gay">Visit the main page</a></h3>
-
-    <h2>If you're trying to snoop - DON'T</h2>
+    <script>
+        // Display all the information when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // User Agent
+            document.getElementById('userAgent').textContent = navigator.userAgent || 'Not available';
+            
+            // Platform
+            document.getElementById('platform').textContent = navigator.platform || 'Not available';
+            
+            // Screen Resolution
+            const width = window.screen.width || 'Unknown';
+            const height = window.screen.height || 'Unknown';
+            document.getElementById('screenResolution').textContent = `${width} × ${height}`;
+            
+            // Color Depth
+            document.getElementById('colorDepth').textContent = window.screen.colorDepth + ' bits' || 'Not available';
+            
+            // Timezone
+            document.getElementById('timezone').textContent = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Not available';
+            
+            // Cookies Enabled
+            document.getElementById('cookiesEnabled').textContent = navigator.cookieEnabled ? 'Yes' : 'No';
+        });
+    </script>
 </body>
 </html>
